@@ -1,0 +1,59 @@
+{% extends 'admin_template/base.html' %}
+{% block page_title %}
+ Add Product
+{% endblock page_title %}
+{% block main_content %}
+<section class="content">
+    <div class="container">
+        <!-- add success msg  -->
+        {% include 'admin_template/msg.html' %}
+        <div class="row mt-3">
+            <div class="col-md-12">
+          <!-- general form elements -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Add Subject</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form role="form" action="/save_product" method="post">
+                {% csrf_token %}
+              <div class="card-body">
+                <div class="form-group">
+                  <label class="text-primary" >Product Name </label>
+                  <input type="text" class="form-control" name="product_name" placeholder="Enter Name">
+                </div>
+
+                <div class="form-group">
+                    <label class="text-primary" >Product Unity </label>
+                    <input type="text" class="form-control" name="product_unity" placeholder="Enter Unity in KG">
+                </div>
+                <div class="form-group">
+                    <label class="text-primary" >Product Price </label> (Optional) 
+                    <input type="text" class="form-control" name="product_price" placeholder="Enter price">
+                </div>
+
+                <div class="form-group">
+                    <label class="text-primary" >Product Type</label>
+                    <select class="form-control" name="product_type">
+                      {% for c in cate%}
+                        <option value="{{c.id}}">{{c.name}}</option>
+                       {%endfor%} 
+                        
+                  </select>
+                </div>
+                <center><button type="submit"  class="btn btn-success">Add Product</button></center>
+              </div>
+              <!-- /.card-body -->
+
+            </form>
+          </div>
+          <!-- /.card -->
+
+
+
+        </div>
+        </div>
+    </div>
+  </section>
+  {% endblock main_content%}

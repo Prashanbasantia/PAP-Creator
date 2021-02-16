@@ -1,0 +1,96 @@
+<!--
+--  Project Name     : Project title - View Blog
+--  Author Name      : Prashan Basantia
+--  Date of Creation : 29-09-2020
+--  Description      : Description about This View Blog page.
+                      this page is used to Show all the product details from database
+                      All these details are display within a javasrcipt data table and this table conatin pagination
+                      and search operation this table have four column of Name Email Phone And Action
+--                    
+                      
+--
+--  Modifications :
+--  Modification Number : MOD000-- 
+--  Modification        : dt-mm-yyyy
+--  modification details:---
+-->
+
+{% extends 'admin_template/base.html' %}
+{% block page_title %}
+Make Payment
+{% endblock page_title %}
+{% block main_content %}
+<!-- main content -->
+<section class="content pt-3">
+    <div class="container">
+      {% include 'admin_template/msg.html' %}
+      <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Invoice</h3>
+        </div>
+        <div class="card-body">
+
+        
+      <form action="/save_receipt" method="POST">
+        {% csrf_token %}
+        <label class="text-primary">Choose Receipt Type</label><br>
+        <label class="radio-inline ml-3 text-dark">
+          <input type="radio" name="receipt_type" value="1" checked>&nbsp; &nbsp;Sell
+        </label>
+        <label class="radio-inline ml-5">
+          <input type="radio" name="receipt_type" value="0">&nbsp; &nbsp;Return 
+        </label>
+        <div class="form-group">
+          <label class="text-primary">Select Customer</label>
+          <select name="cust_id" class="form-control">
+            {% for c in cust %}
+            <option value="{{c.id}}">{{c.admin.first_name}} {{c.admin.last_name}} &nbsp; &nbsp;(At-{{c.address}}) [Mob-{{c.admin.email}}]</option>
+            {%endfor%}
+          </select>
+     </div>
+     
+     <label class="text-primary">Select Product</label>
+      <table class="table" id ="field">
+        <tr>
+          <td>
+            <div class="form-group">
+          <select name="prod_id" class="form-control">
+            {%for p in prod %}
+            <option value="{{p.id}}">{{p.name}}  &nbsp; &nbsp; ({{p.unity}} KG) <span style="color: red i !important;">[Bag-{{p.quantity}}]</span></option>
+            {%endfor%}
+          </select>
+        </div>
+          </td>
+          <td>
+            <div class="form-grop">
+              <input type="number" class="form-control" name="prod_quantity" placeholder="Enetr Quantity">
+            </div>
+          </td>
+
+          <td><button type="button" class="btn btn-sm btn-primary my-1" id="add_field"><i class="fas fa-plus-square"></i></button></td>
+        </tr>
+      </table>
+      <center><button type="submit" class="btn btn-success my-4">Submit</button></center>
+    </form>
+  </div>
+</div>
+</div>
+</section>
+<!-- / main content -->
+{% endblock main_content %}
+
+{% block custom_js%}
+
+<script>
+  $(document).ready(function(){
+var html ='<tr><td><div class="form-group"><select name="prod_id" class="form-control">{%for p in prod %}<option value="{{p.id}}">{{p.name}}  &nbsp; &nbsp; ({{p.unity}} KG) [Bag-{{p.quantity}}].</option>{%endfor%}</select></div></td><td><div class="form-grop"><input type="number" class="form-control" name="prod_quantity" placeholder="Enetr Quantity"></div></td><td><button type="button" class="btn btn-sm btn-danger my-1" id="remove_field"><i class="fas fa-times-circle"></i></button></td></tr>';
+$("#add_field").click(function(){
+  $("#field").append(html)
+});
+
+$("#field").on('click','#remove_field',function(){
+  $(this).closest('tr').remove();
+});
+  });
+</script>
+{% endblock custom_js%}

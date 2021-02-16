@@ -1,0 +1,85 @@
+<!--
+--  Project Name     : Project title - View Blog
+--  Author Name      : Prashan Basantia
+--  Date of Creation : 29-09-2020
+--  Description      : Description about This View Blog page.
+                      this page is used to Show all the product details from database
+                      All these details are display within a javasrcipt data table and this table conatin pagination
+                      and search operation this table have four column of Name Email Phone And Action
+--                    
+                      
+--
+--  Modifications :
+--  Modification Number : MOD000-- 
+--  Modification        : dt-mm-yyyy
+--  modification details:---
+-->
+
+{% extends 'admin_template/base.html' %}
+{% block page_title %}
+View Products
+{% endblock page_title %}
+{% block main_content %}
+<!-- main content -->
+<section class="content pt-3">
+    <div class="container">
+      <div class="row">
+        <!--  column -->
+        <div class="col-md-12">
+          <!--  card -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">View Products</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <div class="table-responsive">
+                <!-- data table -->
+              <table id="data_table" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Unity</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Type</th>
+                  <th>Action</th>
+                  
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for p in prod %}
+                <tr>
+                  <td>{{ p.name }}</td>
+                  <td>{{ p.unity }} KG</td>
+                  <td>{{ p.price }}</td>
+                  <td>{{ p.quantity }}</td>
+                  <td>{{ p.cate_id.name }}</td>
+                  <td><a href="/edit_product/{{p.id}}">Edit</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+               
+              </table>
+              <!-- / data table -->
+            </div>
+            <!-- / table responsive -->
+            </div>
+            <!-- /.card-body -->
+          </div>
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /column -->
+    </div>
+    <!-- / row -->
+</div>
+</section>
+<!-- / main content -->
+{% endblock main_content %}
+
+{% block custom_js%}
+
+
+{% endblock custom_js%}

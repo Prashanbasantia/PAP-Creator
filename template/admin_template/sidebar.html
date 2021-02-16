@@ -1,0 +1,145 @@
+{% load static %}
+  <aside class="main-sidebar sidebar-dark-primary elevation-4 pb-5" style="background-color: #240835;">
+    <!-- Brand Logo -->
+
+    <a href="#" class="brand-link">
+      <img src="{% static 'dist/img/AdminLTELogo.png' %}"  class="brand-image mt-3 img-thumbnail elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">Benudhar Traders<br><small style="font-family:Verdana, Geneva, Tahoma, sans-serif">Admin Pannel</small></span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+               <li class="nav-item">
+                {% url 'dashboard' as dashboard%}
+                <a href="{{dashboard}}" class="nav-link {%if request.path == dashboard %}active{%endif%}">
+                  <i class="nav-icon fas fa-home"></i>
+                  <p>
+                  Dashboard
+                  </p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                {% url 'add_customer' as add_customer %}
+                <a href="{{add_customer}}" class="nav-link {% if request.path == add_customer %} active {% endif %}" >
+                  <i class="nav-icon fas fa-user-plus"></i>
+                  <p>
+                   Add Customer
+                  </p>
+                </a>
+              </li>
+
+           <li class="nav-item">
+            {% url 'view_customer' as view_customer %}
+            {% url 'view_inac_customer' as view_inac_customer %}
+            {% url 'edit_customer' cust_id=id as edit_customer %}
+            <a href="{{view_customer}}" class="nav-link {% if request.path == view_customer %} active {% endif %} {% if request.path == edit_customer %} active {% endif %} {% if request.path == view_inac_customer %} active {% endif %}" >
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+              View Customer
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            {% url 'add_product' as add_product %}
+            <a href="{{add_product}}" class="nav-link {% if request.path == add_product %} active {% endif %}" >
+              <i class="nav-icon fas fa-shopping-bag"></i>
+              <p>
+               Add Product
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            {% url 'view_product' as view_product %}
+            {% url 'edit_product' prod_id=id as edit_product %}
+            <a href="{{view_product}}" class="nav-link {% if request.path == view_product %} active {% endif %}
+             {% if request.path == edit_product %} active {% endif %}" >
+              <i class="nav-icon fas fa-eye"></i>
+              <p>
+             View Products
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            {% url 'add_category' as add_category %}
+            
+            <a href="{{add_category}}" class="nav-link {% if request.path == add_category %} active {% endif %}">
+              <i class="nav-icon fas fa-gopuram"></i>
+              <p>
+             Product Category
+              </p>
+            </a>
+          </li>
+          
+          
+
+
+          <li class="nav-item">
+            {% url 'inventory' as inventory%}
+            <a href="{{inventory}}" class="nav-link {%if request.path == inventory %}active{%endif%}">
+              <i class="nav-icon fas fa-warehouse"></i>
+              <p>
+               Inventory
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            {% url 'add_item' as add_item%}
+            <a href="{{add_item}}" class="nav-link {%if request.path == add_item %}active{%endif%}">
+              <i class="nav-icon fas fa-plus-circle"></i>
+              <p>
+              Add Stock Item 
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'receipt' as receipt%}
+            <a href="{{receipt}}" class="nav-link {%if request.path == receipt %}active{%endif%}">
+              <i class="nav-icon fas fa-plus-circle"></i>
+              <p>
+              Payment 
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'transaction' as transaction%}
+            <a href="{{transaction}}" class="nav-link {%if request.path == transaction %}active{%endif%}">
+              <i class="nav-icon fas fa-plus-circle"></i>
+              <p>
+              Transaction
+              </p>
+            </a>
+          </li>
+          
+          <div class="dropdown-divider"></div>
+          <li class="nav-item">
+            
+            <a href="" class="nav-link" data-toggle="modal" data-target="#logout_modal"> 
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>
+             Logout
+              </p>
+            </a>
+          </li>
+          
+
+        </ul>
+      </nav>
+
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>

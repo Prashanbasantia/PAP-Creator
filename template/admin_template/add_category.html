@@ -1,0 +1,98 @@
+{% extends 'admin_template/base.html' %}
+{% block page_title %}
+ Add Category
+{% endblock page_title %}
+{% block main_content %}
+<section class="content">
+    <div class="container">
+        <!-- add success msg  -->
+        {% include 'admin_template/msg.html' %}
+        <div class="row mt-3">
+            <div class="col-md-12">
+          <!-- general form elements -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Add Category</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form role="form" action="/save_category" method="post">
+                {% csrf_token %}
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                    
+                    <input type="text" class="form-control" name="cate_name" placeholder="Enter Category Name">
+                  </div>
+              </div>
+                  <div class="col-sm-6">
+                    <button type="submit" class="btn btn-primary">Add Category</button>
+                  </div>
+                </div>
+                
+
+
+               
+              </div>
+              <!-- /.card-body -->
+
+            </form>
+          </div>
+          <!-- /.card -->
+
+
+
+        </div>
+        </div>
+
+
+      <!-- ############## view Product #############-->
+      <div class="row">
+        <!--  column -->
+        <div class="col-md-12">
+          <!--  card -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">View Category</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <div class="table-responsive">
+                <!-- data table -->
+              <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>delete</th>
+                  
+                  
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for c in cate %}
+                <tr>
+                  <td>{{ c.name }}</td>
+                  <td><a href="/edit_product/{{p.id}}">Delete</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+               
+              </table>
+              <!-- / data table -->
+            </div>
+            <!-- / table responsive -->
+            </div>
+            <!-- /.card-body -->
+          </div>
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /column -->
+    </div>
+    <!-- / row -->
+          <!-- end view product -->
+    </div>
+  </section>
+  {% endblock main_content%}

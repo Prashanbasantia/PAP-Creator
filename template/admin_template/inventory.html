@@ -1,0 +1,57 @@
+<!--
+--  Project Name     : Project title - View Blog
+--  Author Name      : Prashan Basantia
+--  Date of Creation : 29-09-2020
+--  Description      : Description about This View Blog page.
+                      this page is used to Show all the product details from database
+                      All these details are display within a javasrcipt data table and this table conatin pagination
+                      and search operation this table have four column of Name Email Phone And Action
+--                    
+                      
+--
+--  Modifications :
+--  Modification Number : MOD000-- 
+--  Modification        : dt-mm-yyyy
+--  modification details:---
+-->
+
+{% extends 'admin_template/base.html' %}
+{% block page_title %}
+ View Employee
+{% endblock page_title %}
+{% block main_content %}
+<!-- main content -->
+<section class="content pt-3">
+    <div class="container">
+
+<div class="row">
+{% for p in prod %}
+    {% if forloop.counter0|divisibleby:3 %}
+        </div><div class="row">
+    {% endif %}
+        <div class="col-sm-4"> 
+          <div class="info-box">
+            <span class="info-box-icon 
+            {% if p.cate_id.name == 'Medicine' %}bg-success
+            {% elif p.cate_id.name == 'Feed' %}bg-warning
+            {% elif p.cate_id.name == 'Oxide' %}bg-danger
+            {% else %}bg-info
+            {%endif%}">{{p.quantity}}</span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">{{p.name}}</span>
+              <span class="info-box-number">{{p.unity}} KG</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>  
+        </div>
+{% endfor %}
+</div>
+</section>
+<!-- / main content -->
+{% endblock main_content %}
+
+{% block custom_js%}
+
+
+{% endblock custom_js%}

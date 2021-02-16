@@ -1,0 +1,78 @@
+<!--
+--  Project Name     : Project title - View Transaction
+--  Author Name      : Prashan Basantia
+--  Date of Creation : 29-09-2020
+--  Description      : Description about This View transaction page.
+                      this page is used to Show all the transaction  details from database
+                      All these details are display within a javasrcipt data table and this table conatin pagination
+                      and search operation this table have four column of Name Email Phone And Status
+--                    
+                      
+--
+--  Modifications :
+--  Modification Number : MOD000-- 
+--  Modification        : dt-mm-yyyy
+--  modification details:---
+-->
+
+{% extends 'admin_template/base.html' %}
+{% block page_title %}
+View Transaction
+{% endblock page_title %}
+{% block main_content %}
+<!-- main content -->
+<section class="content pt-2">
+    <div class="container-fluid">
+      <div class="row">
+        <!--  column -->
+        <div class="col-md-12">
+          <!--  card -->
+          
+          {%for i in receipt %}
+            {{i.prod_id.name}}
+          {% endfor%}
+            
+  
+           
+        </div>
+        <!-- /column -->
+    </div>
+    <!-- / row -->
+</div>
+</section>
+<!-- / main content -->
+{% endblock main_content %}
+
+{% block custom_js%}
+
+<script>
+  //this function used to add more functionality on a table like pagination searching 
+  $(function () {
+    $('#view_employee_table').DataTable();
+  });
+</script>
+{% endblock custom_js%}
+{%block custom_css%}
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  
+  /* Create four equal columns that floats next to each other */
+  .column {
+    float: left;
+    width: 25%;
+    
+    text-align: center;
+   
+    height: auto; /* Should be removed. Only for demonstration */
+  }
+  
+  /* Clear floats after the columns */
+  .t-row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  </style>
+{%endblock custom_css%}

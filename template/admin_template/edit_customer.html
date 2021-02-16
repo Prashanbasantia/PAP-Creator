@@ -1,0 +1,144 @@
+<!--
+--  Project Name     : Project title - Edit Blog
+--  Author Name      : Prashan Basantia
+--  Date of Creation : 29-09-2020
+--  Description      : Description about This Edit Blog page.
+--                     This Page have contain Edit Blog form within a bootstart card.
+                      This form only have Two filed one is blog subject  of input type  textand another is blog content
+                      The field Blog Content is Textarea 
+--
+--  Modifications :
+--  Modification Number : MOD000-- 
+--  Modification        : dt-mm-yyyy
+--  modification details:---
+-->
+
+{% extends 'admin_template/base.html' %}
+{% block page_title %}
+Edit customer {{cust.admin.first_name}} {{cust.admin.last_name}}
+{% endblock page_title %}
+{% block main_content %}
+<!-- main content -->
+<section class="content pt-3">
+  <div class="container">
+     
+ 
+
+    <div class="row pt-3">
+      <div class="col-md-12">
+        <!-- alert messgae on success and error -->
+        {% include 'admin_template/msg.html' %}
+        <!-- / end alert message -->
+        <!--  card -->
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Edit Customer {{cust.admin.first_name}} {{cust.admin.last_name}} </h3>
+          </div>
+          <!-- /.card-header -->
+          <!-- add blog form start -->
+          <form role="form" action="/update_customer" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-6">
+                  <input type="hidden" name="cust_id" value="{{cust.admin.id}}">
+                  <div class="form-group">
+                    <label for="f_name">First Name</label>
+                    <input type="text" name="f_name" value="{{cust.admin.first_name}}" class="form-control" id="f_name" 
+                    placeholder="Enter First Name" autocomplete="off">
+                  </div>
+                </div>
+              
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="l_name">Last Name</label>
+                  <input type="text" name="l_name" value="{{cust.admin.last_name}}" class="form-control" id="l_name" 
+                  placeholder="Enter First Name" autocomplete="off">
+                </div>
+              </div>
+              
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="mobile">Mobile</label>
+                  <input type="text" name="mobile" value="{{cust.admin.email}}" class="form-control" id="mobile" 
+                  placeholder="Enter Mobile No" autocomplete="off">
+                </div>
+              </div>
+            
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="aaddhar">Aaddhar</label>
+                <input type="text" name="aaddhar" value="{{cust.admin.username}}" class="form-control" id="aaddhar" 
+                placeholder="Enter Aaddhar No" autocomplete="off">
+              </div>
+            </div>
+            
+          </div>
+
+        
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" name="dob" value="{{cust.dob}}" class="form-control" id="dob"  autocomplete="off">
+              </div>
+            </div>
+          
+
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="address">Village</label>
+              <input type="text" name="address" value="{{cust.address}}" class="form-control" id="address" 
+              placeholder="Enter Village Name" autocomplete="off">
+            </div>
+          </div>
+          
+        </div>
+
+
+                <div class="form-group">
+                  <label for=""> <img src="{{cust.admin.profile_photo.url}}" class="rounded-circle" width="50px" height="50px"> Profile Photo</label>(optional)
+                  <input type="file" name="profile_photo" class="form-control" id="" autocomplete="off">
+                  
+                </div>
+                <code class="bg-warning px-1 mx-3"> <strong>Note</strong>:If Customer is set Inactive  He can't Login</code><hr>
+                <div class="form-group form-check">
+                  
+                  <label class="form-check-label">
+                    <input class="form-check-input" name="inactive" type="checkbox" {% if cust.admin.is_active == True %} checked{%endif%}> Is_Active  
+                  </label>
+                </div>
+              
+                <center><button type="submit" class="btn btn-success">Update Customer</button></center>
+               
+                <!-- /.card-body -->
+
+           
+          </form>
+          <!-- / blog form -->
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /column -->
+  </div>
+  <!-- / row -->
+</div>
+</section>
+<!-- / main content -->
+{% endblock main_content %}
+
+{% block custom_js%}
+<script>
+  /*
+  $(function () {
+   // --> This id #blog_content contains a textarea 
+  // this textarea is customize as full feature editor
+    $('#blog_content').summernote()
+  })*/
+</script>
+{% endblock custom_js%}

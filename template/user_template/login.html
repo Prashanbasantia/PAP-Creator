@@ -1,0 +1,44 @@
+{% extends 'user_template/base.html' %}
+{% block page_title %}
+Login
+{% endblock page_title %}
+{% block main_content %}
+
+  <main id="main">
+    <section id="login" class="login">
+        <div class="container" data-aos="fade-up">
+          <div class="row" data-aos="fade-up" data-aos-delay="100">
+  
+            <div class="col-lg-3"></div>
+  
+            <div class="col-lg-6">
+                
+              <form action="/verify_login" method="POST" role="form" class="login_form">
+                  {% csrf_token %}
+                <div class="section-title">
+                    <h2>Login</h2>
+                  </div>
+                  <!-- alert msg code -->
+                  {% include 'user_template/msg.html'%}
+                <div class="form-group">
+                    <label>Email</label>
+                  <input type="text" class="form-control" name="email" id="email" placeholder="Enter Email" required/>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password" required /> 
+                </div>
+                <div class="my-4">
+                  <div class="forget-password"><a href ="{% url 'forget_password' %}">Forget Password</a></div>
+                </div>
+                <div class="text-center"><button type="submit">Login</button></div>
+              </form>
+            </div>
+            <div class="col-lg-3"></div>
+          </div>
+  
+        </div>
+      </section><!-- End Contact Section -->
+  
+  </main>  
+  {% endblock main_content %}

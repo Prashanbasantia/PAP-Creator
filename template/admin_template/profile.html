@@ -1,0 +1,162 @@
+<!--
+--  Project Name     : Project title - profile
+--  Author Name      : Prashan Basantia
+--  Date of Creation : 29-09-2020
+--  Description      : Description about This profile page.
+                      this page is used to update the user details
+--                    This Page have contain  four filed used to change name email,phone password within bootstart card.
+                      
+--
+--  Modifications :
+--  Modification Number : MOD000-- 
+--  Modification        : dt-mm-yyyy
+--  modification details:---
+-->
+{% extends 'admin_template/base.html' %}
+{% block page_title %}
+Admin Profile
+{% endblock page_title %}
+
+{% block main_content %}
+<!-- main content -->
+<section class="content pt-3">
+    <div class="container">
+       <div class="row pt-3">
+        <!--  column -->
+        <div class="col-md-12">
+
+          <!-- alert msg -->
+          {% include 'admin_template/msg.html' %}
+          <!-- end alert msg -->
+          <!--  card -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Admin Profile</h3>
+            </div>
+   
+           
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="card card-light">
+                      <div class="card-header">
+                        <h6>Admin Name<a href="" class="float-right"><i class="fas fa-pen"></i></a></h6>
+                      </div>
+                      <div class="card-body">
+                        <form action="/admin_change_name" method="POST">
+                          {% csrf_token %}
+                          <div class="form-group">
+                            <label>New First Name</label>
+                            <input type="text" name="change_f_name" value="{{user.first_name }}" class="form-control">
+                          </div>
+                          <div class="form-group">
+                            <label>New Optional Mobile</label>
+                            <input type="text" name="change_l_name" value="{{user.last_name}}" class="form-control"  required>
+                          </div>
+                          <center><button class="btn btn-success btn-sm">Change Name</button></center>
+                        </form>
+                      </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="card card-light">
+                      <div class="card-header">
+                        <h6>Admin Mobile<a href="" class="float-right"><i class="fas fa-pen"></i></a></h6>
+                      </div>
+                      <div class="card-body">
+                        <form action="/admin_change_mobile" method="POST">
+                          {% csrf_token %}
+                          <div class="form-group">
+                            <label>New Mobile</label>
+                            <input type="text" name="change_mobile" value="{{request.user.username}}" class="form-control" placeholder="Enter New Mobile" required>
+                          </div>
+                          <div class="form-group">
+                            <label>New Optional Mobile</label>
+                            <input type="text" name="change_opt_mobile" value="{{request.user.email}}" class="form-control" placeholder="Enter New Optioanl Mobile" required>
+                          </div>
+                          <center><button class="btn btn-success btn-sm">Change Mobile</button></center>
+                        </form>
+                      </div>
+                     </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="card card-light">
+                      <div class="card-header">
+                        <h6>Admin Profile Image<a href="" class="float-right"><i class="fas fa-pen"></i></a></h6>
+                      </div>
+                      <div class="card-body">
+                           
+                              {% if request.user.profile_photo == '' %}
+                                <span class="text-uppercase" style="font-size: 95px;
+                                font-weight: bold;width:95px;height:95px;
+                                border: 5px solid rgb(209, 62, 17);
+                                background-color:sandybrown;
+                                border-radius:50%;
+                                color: rgb(20, 15, 15);">{{request.user.first_name.0}}{{request.user.last_name.0}}
+                                </span>
+                                
+                                &nbsp;&nbsp;
+                              {% else %}
+                              <img src="{{request.user.profile_photo.url}}" class="rounded-circle border border-danger" width="100px" height="100px">
+                              {% endif %}
+                           
+                            <form action="/admin_change_profile_image" method="POST" enctype="multipart/form-data">
+                              {% csrf_token %}
+                              <div class="custom-file mt-5">
+                                <input type="file" name="profile_photo" class="custom-file-input" id="customFile">
+                                <label class="custom-file-label" for="customFile">Choose Image</label>
+                              </div>
+                              
+                              <center><button class="btn btn-success btn-sm mt-4">Change Image</button></center>
+                              </form>
+                            
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="card card-light">
+                      <div class="card-header">
+                        <h6>Change Password</h6>
+                      </div>
+                      <div class="card-body">
+                        <form action="/admin_change_password" method="POST">
+                          {% csrf_token %}
+                        <div class="form-group">
+                          <label>Current Password</label>
+                          <input type="password" name="old_password" class="form-control" placeholder="Enter Current Password" required>
+                        </div>
+                        <div class="form-group">
+                          <label>New Password</label>
+                          <input type="password" name="new_password" class="form-control" placeholder="Enter New Password" required>
+                        </div>
+                        <div class="form-group">
+                          <label>New Confirm Password</label>
+                          <input type="text" name="new_c_password" class="form-control" placeholder="Enter New Confirm Password" required>
+                        </div>
+                        <center><button class="btn btn-success btn-sm">Change Password</button></center>
+                        </form>
+                      </div>
+                     </div>
+                  </div>
+                </div>
+
+              
+
+                
+                
+
+              <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /column -->
+    </div>
+    <!-- / row -->
+</div>
+</section>
+<!-- / main content -->
+
+{% endblock main_content %}

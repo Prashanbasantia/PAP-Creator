@@ -1,0 +1,135 @@
+<!--
+--  Project Name     : Project title - Add Blog
+--  Author Name      : Prashan Basantia
+--  Date of Creation : 29-09-2020
+--  Description      : Description about This Add Blog page.
+--                     This will have contain Add Blog form within a bootstart card.
+                      This form only have Two filed one is blog subject and another is blog content
+                      The field Blog Content is Textarea , and it will be customize as Tiny Editor 
+                      if you don't know what is Tiny Editor . Please ask Google 
+--
+--  Modifications :
+--  Modification Number : MOD000-- 
+--  Modification        : dt-mm-yyyy
+--  modification details:---
+-->
+
+
+{% extends 'admin_template/base.html' %}
+{% block page_title %}
+ Verify OTP
+{% endblock page_title %}
+{% block main_content %}
+<!-- main content -->
+<section class="content pt-2">
+    <div class="container-fluid">
+     
+
+      <div class="row pt-3">
+        <div class="col-md-12">
+         
+          <!--  card -->
+          <form role="form" action="/otp_verify" method="POST" >
+            {% csrf_token %}
+          <!-- otp card -->
+          <div class="row">
+            <div class="col-sm-3"></div>
+
+            <div class="col-sm-6">
+              <div class="card card-primary" id="otp_card">
+                  <div class="card-header p-0">
+                    <h5 class="card-header">Verify OTP</h5>
+                  </div>
+                  <div id ="show_msg"></div>
+                <div class="card-body">
+                  <input type="hidden" name="cust_id" id="cust_id" value="{{cust_id}}">
+                       <!-- alert messgae on success and error -->
+                        {% include 'admin_template/msg.html' %}
+                        <!-- / end alert message -->
+                      <div class="form-group">
+                        <p>OTP Sent to this number : <strong>{{email}}</strong> </p>
+                        <label for="otp">Enter OTP</label>
+                        <input type="number" name="otp" value="{{otp}}" class="form-control" id="otp"  autocomplete="off"><br>
+                        <p id="resend" style="cursor: pointer; color:royalblue;"></p><p id="mycounter"></p>
+                      </div>
+                      <center> <button type="submit"  class="btn btn-success btn-sm" id="sub_btn">Verify</button></center>
+                </div>
+              </div>
+              </div>
+
+          
+          <div class="col-sm-3"></div>
+                
+          </div>
+
+
+        </form>
+        </div>
+        <!-- /column -->
+    </div>
+    <!-- / row -->
+</div>
+</section>
+<!-- / main content -->
+{% endblock main_content %}
+{% block custom_css%}
+<style>
+  
+</style>
+{%endblock custom_css%}
+
+{% block custom_js%}
+<script>
+i=20
+function onTimer() {
+  document.getElementById('resend').innerHTML = "";
+  document.getElementById('mycounter').innerHTML = "Resend OTP : "+i;
+  i--;
+  if (i < 0) {
+    document.getElementById('mycounter').innerHTML = "";
+    document.getElementById('resend').innerHTML = "Resend";
+  }
+  else {
+    setTimeout(onTimer, 1000);
+  }
+}
+
+
+  $(document).ready(function(){
+    i=20
+    onTimer();
+ 
+    $("#resend").click(function(){
+      i=10
+      var cust_id=$('#cust_id').val();
+      onTimer(20)
+      $.ajax({
+        url:'{% url "resend_user_otp" %}',
+        type:'POST',
+        data:{cust_id:cust_id},
+        success:function(response){
+          if(response=="True"){
+            $("#show_msg").append('<div class="alert alert-success" style="margin:10px auto; width:80%;text-align:center;"><span class="text-center">Resend OTP Successfully</span></div>');
+            
+            setTimeout(function () { 
+              $("#show_msg").html(""); 
+              
+           }, 2000);
+          }
+          else{
+            $("#show_msg").append('<div class="alert alert-danger" style="margin:10px auto; width:80%;text-align:center;"><span class="text-center">Resend OTP Failed</span></div>');
+            setTimeout(function () { 
+              $("#show_msg").html(""); 
+              
+           }, 2000);
+          }
+        }
+    });
+  
+    });
+  
+  });
+ 
+</script>
+
+{% endblock custom_js %}

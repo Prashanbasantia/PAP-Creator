@@ -1,0 +1,87 @@
+<!--
+--  Project Name     : Project title - Edit Employee
+--  Author Name      : Prashan Basantia
+--  Date of Creation : 29-09-2020
+--  Description      : Description about This Edit Employee page.
+--                    This Page have contain Edit Employee form within a bootstart card.
+                      This form only have four field of input type text,email,password and a select box 
+--
+--  Modifications :
+--  Modification Number : MOD000-- 
+--  Modification        : dt-mm-yyyy
+--  modification details:---
+-->
+
+{% extends 'admin_template/base.html' %}
+{% block page_title %}
+ Edit Employee
+{% endblock page_title %}
+{% block main_content %}
+<!-- main content -->
+<section class="content pt-3">
+    <div class="container">
+
+      <!-- alert messgae on success and error -->
+      {% include 'admin_template/msg.html' %}
+      <!-- / end alert message -->
+
+
+      <div class="row pt-3">
+        <!--  column -->
+        <div class="col-md-12">
+          <!--  card -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Edit Product {{ prod.name }}</h3>
+            </div>
+            <!-- /.card-header -->
+
+            <!-- add employee form start -->
+            <form role="form" action="/update_product" method="POST">
+                {% csrf_token %}
+              <div class="card-body">
+                <input type="hidden" name="product_id" value="{{ prod.id }}">
+                <div class="form-group">
+                    <label for="product_name">Product Name</label>
+                    <input type="text" name="product_name" class="form-control" 
+                    id="product_name" value="{{ prod.name }}" autocomplete="off" required>
+                  </div>
+
+                <div class="form-group">
+                  <label for="product_unity">Product Unity</label>
+                  <input type="text"  name="product_unity" class="form-control" 
+                  id="product_unity" value="{{ prod.unity }}"  autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label for="product_price">Product Price</label>
+                    <input type="text"  name="product_price" class="form-control" 
+                    id="product_price" value="{{ prod.price }}"  autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label for="product_type">Product Type</label>
+                    <select name="product_type" class="form-control" id="product_type" 
+                    autocomplete="off">
+                    {% for c in cate %}
+                              <option value="{{c.id }}" {% if c.id == prod.cate_id_id %} selected {% endif %}>{{ c.name }}</option>
+                        {% endfor %}
+                        
+                    </select>
+                </div>
+                <center><button type="submit" class="btn btn-success">Update Product</button></center>
+                </div>
+
+              <!-- /.card-body -->
+
+            </form>
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /column -->
+    </div>
+    <!-- / row -->
+</div>
+</section>
+<!-- / main content -->
+{% endblock main_content %}

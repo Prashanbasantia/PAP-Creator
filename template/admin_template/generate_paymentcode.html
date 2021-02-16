@@ -1,0 +1,212 @@
+<!--
+--  Project Name     : Project title - Generate Payment Code
+--  Author Name      : Prashan Basantia
+--  Date of Creation : 29-09-2020
+--  Description      : Description about This Generate Payment Code page.
+--                    This Page have contain  two django variable like paycode and time within bootstart card.
+                      This page also have a confirmation modal to generate new payment code  
+--
+--  Modifications :
+--  Modification Number : MOD000-- 
+--  Modification        : dt-mm-yyyy
+--  modification details:---
+-->
+
+
+{% extends 'admin_template/base.html' %}
+{% block page_title %}
+Generate Payment Code
+{% endblock page_title %}
+
+{% block main_content %}
+<!-- main content -->
+<section class="content pt-2">
+    <div class="container-fluid">
+       <div class="row pt-3">
+        <div class="col-md-3"></div>
+        <!--  column -->
+
+        <div class="col-md-6">
+          <!--  card -->
+          <div class="card card-success">
+            <div class="card-header">
+              <h3 class="card-title">PAYMENT CODE</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <div class="form-group" style="width: 50%; margin:0 auto;">
+                <label>Client Name</label>
+                <input type="text"  name="order_id" class="form-control" placeholder="Enter Client Name">
+
+              </div>
+              <div class="form-group" style="width: 50%; margin:0 auto;">
+                <label>Ammount</label>
+                <input type="number"  name="order_id" class="form-control" placeholder="Enter Ammount">
+
+              </div>
+               <div class="form-group" style="width: 50%; margin:0 auto;">
+                  <label>Order ID</label>
+                </div>
+                <div class="input-group mb-3" style="width: 50%; margin:0 auto;">
+                  <input type="text" class="form-control" placeholder="Enter Order ID" id= "order_id" name="order_id">
+                  <div class="input-group-append" id="btn_afdigit">
+                    <span class="input-group-text" id ="alfa"></span>
+                    <span class="input-group-text" id="digit"></span>
+                  </div>
+                </div>
+                <div class="form-group" style="width: 50%; margin:0 auto;">
+                  
+                  <a href="#" data-toggle="modal" data-target="#paymentcode_modal" class="float-left" id="show_new_code">New Code</a> <button  id ="copy_button" class="float-right">Copy Link</button>
+                </div>
+                
+                
+
+                
+            </div>
+            <!--  paymentcode_modal -->
+            <div class="modal fade" id="paymentcode_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    
+                    <div class="modal-body">
+                      <h4 class="text-info">Generate Payment Code Conformation</h4>
+                      <p>
+                      <strong>Are you sure ! You want to generate a new Payment Code</strong>
+                    </p>
+                    <div class="float-right">
+                      <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">No</button>
+                      <a class="btn btn-success btn-sm" id ="new_code" href="#" data-dismiss="modal">Yes</a>
+                    </div>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+              <!-- / paymentcode_modal  -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /column -->
+        <div class="col-md-3"></div>
+    </div>
+    <!-- / row -->
+</div>
+</section>
+<!-- / main content -->
+{% endblock main_content %}
+
+{% block custom_js %}
+<script type="text/javascript">
+  function getRandAlfa(){
+var alfa = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+var rand_alfa = Math.floor(Math.random() * alfa.length);
+var rand_str=alfa[rand_alfa];
+return rand_str
+}
+function getRandDigit(){
+  var rand_num= Math.floor(Math.random()*(100000-999999+1)+999999);
+  return rand_num
+}
+  $(document).ready(function () {
+//this is use to generate new random code
+$("#btn_afdigit").hide();
+$("#order_id").focus(function(){
+  $("#btn_afdigit").show();
+  var alf_a = getRandAlfa;
+    $("#alfa").html(alf_a);
+    var digi_t = getRandDigit;
+    $("#digit").html(digi_t);
+});
+
+    $("#new_code").click(function(){
+      var alf_a = getRandAlfa;
+      $("#alfa").html(alf_a);
+      var digi_t = getRandDigit;
+      $("#digit").html(digi_t);
+
+    });
+    // this is use to disable copy button if order infut filed is empty
+    $('#copy_button').hide();
+    
+    $('#order_id').on('keyup', function() {
+      var empty = $("#order_id").val();
+      if (empty ==''){
+        $('#copy_button').hide();
+        $('#show_new_code').hide();
+      }
+        
+      else
+      {
+        $('#copy_button').show();
+        $('#show_new_code').show();
+      }
+    });
+
+    //this is use for copy the link
+    
+      $("#copy_button").click(function (event) {
+          event.preventDefault();
+          var order_id = document.getElementById("order_id").value;
+          var alf = document.getElementById("alfa").innerHTML;
+          var dig = document.getElementById("digit").innerHTML;
+          var combo = order_id + alf + dig ;
+          CopyToClipboard("http://127.0.0.1:8000?paycode=" + combo , true, "Copied");
+      });
+  });
+
+  function CopyToClipboard(value, showNotification, notificationText) {
+      var $temp = $("<input>");
+      $("body").append($temp);
+      $temp.val(value).select();
+      document.execCommand("copy");
+      $temp.remove();
+
+      if (typeof showNotification === 'undefined') {
+          showNotification = true;
+      }
+      if (typeof notificationText === 'undefined') {
+          notificationText = "Copied to clipboard";
+      }
+
+      var notificationTag = $("div.copy-notification");
+      if (showNotification && notificationTag.length == 0) {
+          notificationTag = $("<div/>", { "class": "copy-notification", text: notificationText });
+          $("body").append(notificationTag);
+
+          notificationTag.fadeIn("slow", function () {
+              setTimeout(function (){
+                  notificationTag.fadeOut("slow", function () {
+                      notificationTag.remove();
+                  });
+              }, 1000);
+          });
+      }
+  }
+</script>
+{% endblock custom_js%}
+
+{% block custom_css%}
+<style type="text/css">
+  .copy-notification {
+      color: #ffffff;
+      background-color: rgba(20, 16, 16, 0.938);
+      padding: 10px;
+      border-radius: 30px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 100px;
+      margin-top: -30px;
+      margin-left: -85px;
+      display: none;
+      text-align:center;
+  }
+  #copy_button{
+    border:1px solid silver;
+    border-radius: 20px;
+    background-color: rgb(49, 106, 192);
+    color: rgb(214, 213, 210);
+  }
+</style>
+
+{% endblock custom_css%}
