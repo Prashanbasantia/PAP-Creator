@@ -13,14 +13,14 @@ class LoginCheckMiddleWare(MiddlewareMixin):
             if user.user_type == "1":
                 if modulename == "main_app.admin_views":
                     pass
-                elif  modulename == "django.views.static":
+                elif  modulename == "django.views.static"  or reverse('logout'):
                     pass
                 else:
                     return HttpResponseRedirect(reverse("dashboard"))
             elif user.user_type == "2":
                 if modulename == "main_app.user_views":
                     pass
-                elif modulename == "django.views.static":
+                elif modulename == "django.views.static" or reverse('logout'):
                     pass
                 else:
                     return HttpResponseRedirect(reverse("home"))
